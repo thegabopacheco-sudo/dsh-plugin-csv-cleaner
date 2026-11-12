@@ -1,0 +1,16 @@
+# dsh-plugin-csv-cleaner — capa bundle de DSH.
+# Inserta una fila @deepseek-ai/dsh-mcp-client que lanza el servidor como "csvclean".
+# Tools resultantes: mcp__csvclean__* (ver README).
+- insert:
+    - id: mcp-csv-cleaner
+      name: '@deepseek-ai/dsh-mcp-client'
+      config:
+        serverName: csvclean
+        transport: stdio
+        command: !!js process.execPath
+        args:
+          - !!js "(process.env.DSH_HOME && process.env.DSH_HOME.trim() !== '' ? process.env.DSH_HOME : (process.env.USERPROFILE || process.env.HOME || '') + '/.dsh') + '/plugins/csv-cleaner/server.mjs'"
+        env:
+          ELECTRON_RUN_AS_NODE: '1'
+        failOnStartupError: false
+        toolCallTimeoutMs: 60000
